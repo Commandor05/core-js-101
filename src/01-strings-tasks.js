@@ -18,8 +18,8 @@
  *   'aa',''    => 'aa'
  *   '',  'bb'  => 'bb'
  */
-function concatenateStrings(/* value1, value2 */) {
-  throw new Error('Not implemented');
+function concatenateStrings(value1, value2) {
+  return value1 + value2;
 }
 
 
@@ -34,8 +34,8 @@ function concatenateStrings(/* value1, value2 */) {
  *   'b'     => 1
  *   ''      => 0
  */
-function getStringLength(/* value */) {
-  throw new Error('Not implemented');
+function getStringLength(value) {
+  return value.length;
 }
 
 /**
@@ -51,8 +51,8 @@ function getStringLength(/* value */) {
  *   'John','Doe'      => 'Hello, John Doe!'
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -65,8 +65,8 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   'Hello, John Doe!' => 'John Doe'
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  return (value.split(',')[1]).trimStart().replace('!', '');
 }
 
 
@@ -80,8 +80,8 @@ function extractNameFromTemplate(/* value */) {
  *   'John Doe'  => 'J'
  *   'cat'       => 'c'
  */
-function getFirstChar(/* value */) {
-  throw new Error('Not implemented');
+function getFirstChar(value) {
+  return value[0];
 }
 
 /**
@@ -95,8 +95,8 @@ function getFirstChar(/* value */) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -110,8 +110,8 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   'A', 5  => 'AAAAA'
  *   'cat', 3 => 'catcatcat'
  */
-function repeatString(/* value, count */) {
-  throw new Error('Not implemented');
+function repeatString(value, count) {
+  return value.repeat(count);
 }
 
 /**
@@ -126,8 +126,8 @@ function repeatString(/* value, count */) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(str.substring(str.indexOf(value), Number(str.indexOf(value) + value.length)), '');
 }
 
 /**
@@ -141,8 +141,17 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  let result = str;
+  if (str.endsWith('>')) {
+    result = result.slice(0, -1);
+  }
+
+  if (str.startsWith('<')) {
+    result = result.slice(1);
+  }
+
+  return result;
 }
 
 
@@ -156,8 +165,8 @@ function unbracketTag(/* str */) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  return str.toUpperCase();
 }
 
 /**
@@ -175,8 +184,8 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -202,8 +211,25 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let output = '';
+  for (let h = 0; h < height; h += 1) {
+    for (let w = 0; w < width; w += 1) {
+      if (h === 0 && w === 0) output += String.fromCodePoint('9484');
+      // console.log(('┌').codePointAt(0));
+      if ((h === 0 || h === height - 1) && w !== 0 && w !== width - 1) output += String.fromCodePoint('9472');
+      if (h === 0 && w === width - 1) output += String.fromCodePoint('9488');
+
+      if ((h > 0 && h < height - 1) && (w === 0 || w === width - 1)) output += String.fromCodePoint('9474');
+      if ((h > 0 && h < height - 1) && (w > 0 && w < width - 1))output += String.fromCodePoint('32');
+
+      if (h === height - 1 && w === 0) output += String.fromCharCode('9492');
+      if (h === height - 1 && w === width - 1) output += String.fromCodePoint('9496');
+    }
+    output += '\n';
+  }
+
+  return output;
 }
 
 
@@ -223,8 +249,32 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const charShift = (char) => {
+    const upperRange = [('A').charCodeAt(0), ('Z').charCodeAt(0)];
+    const downRange = [('a').charCodeAt(0), ('z').charCodeAt(0)];
+    const [upperRangeStart, upperRangeEnd] = upperRange;
+    const charCode = char.charCodeAt(0);
+    const currentRange = upperRangeStart <= charCode && charCode <= upperRangeEnd
+      ? upperRange
+      : downRange;
+    const [rangeStart, rangeEnd] = currentRange;
+    if (!(rangeStart <= charCode && charCode <= rangeEnd)) {
+      return charCode;
+    }
+    const OFFSET = 13;
+    return charCode + OFFSET <= rangeEnd
+      ? charCode + OFFSET
+      : rangeStart + (OFFSET - (rangeEnd - (charCode - 1)));
+  };
+
+  let encodedString = '';
+  [...str].forEach((char) => {
+    const shiftedChar = String.fromCharCode(charShift(char));
+    encodedString += shiftedChar;
+  });
+
+  return encodedString;
 }
 
 /**
@@ -240,8 +290,8 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  return Boolean(value && typeof value.valueOf() === 'string');
 }
 
 
@@ -262,7 +312,7 @@ function isString(/* value */) {
  * @return {number}
  *
  * @example
- *   'A♣' => 0
+ *   'A♣'.codePointAt() => 0
  *   '2♣' => 1
  *   '3♣' => 2
  *     ...
