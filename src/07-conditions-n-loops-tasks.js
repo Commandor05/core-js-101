@@ -288,23 +288,22 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  // let sum = 0;
-  // const cnnArr = ccn.toString().split('').map((item) => Number(item));
-  // for (let i = 0; i < cnnArr.length; i += 1) {
-  //   let value = cnnArr[i];
-  //   if (i % 2 !== 0) {
-  //     value *= 2;
-  //     if (value > 9) {
-  //       // eslint-disable-next-line no-return-assign, no-param-reassign
-  //       value = value.toString().split('').reduce((acc, item) => acc += Number(item), 0);
-  //     }
-  //   }
-  //   sum += value;
-  // }
+function isCreditCardNumber(ccn) {
+  let sum = 0;
+  const cnnArr = ccn.toString().split('').map((item) => Number(item)).reverse();
+  for (let i = 0; i < cnnArr.length; i += 1) {
+    let value = cnnArr[i];
+    if (i % 2 !== 0) {
+      value *= 2;
+      if (value > 9) {
+        // eslint-disable-next-line no-return-assign, no-param-reassign
+        value = value.toString().split('').reduce((acc, item) => acc += Number(item), 0);
+      }
+    }
+    sum += value;
+  }
 
-  // return (sum % 10) === 0;
-  throw new Error('Not implemented');
+  return (sum % 10) === 0;
 }
 
 /**
