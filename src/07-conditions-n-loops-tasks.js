@@ -27,8 +27,17 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  let result = '';
+  if (num % 3 === 0) {
+    result = 'Fizz';
+  }
+
+  if (num % 5 === 0) {
+    result += 'Buzz';
+  }
+
+  return result || num;
 }
 
 
@@ -43,8 +52,16 @@ function getFizzBuzz(/* num */) {
  *   5  => 120
  *   10 => 3628800
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function getFactorial(n) {
+  if (n < 0) {
+    return -1;
+  }
+
+  if (n === 0) {
+    return 1;
+  }
+
+  return n * getFactorial(n - 1);
 }
 
 
@@ -60,8 +77,13 @@ function getFactorial(/* n */) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let sum = 0;
+  for (let i = n1; i <= n2; i += 1) {
+    sum += i;
+  }
+
+  return sum;
 }
 
 
@@ -80,8 +102,8 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return (a + b > c) && (a + c > b) && (c + b > a);
 }
 
 
@@ -148,8 +170,9 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const d = Math.sqrt((point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2);
+  return !!(d < circle.radius);
 }
 
 
@@ -164,8 +187,22 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  let result = null;
+  const arrStr = str.split('');
+  for (let i = 0; i < arrStr.length; i += 1) {
+    const substr = i > 0 ? [...arrStr.slice(0, i), ...arrStr.slice((i + 1))]
+      : arrStr.slice((i + 1));
+    if (substr.includes(arrStr[i])) {
+      // eslint-disable-next-line no-continue
+      continue;
+    } else {
+      result = arrStr[i];
+      break;
+    }
+  }
+
+  return result;
 }
 
 
@@ -191,8 +228,9 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const [x, y] = (a < b) ? [a, b] : [b, a];
+  return `${isStartIncluded ? '[' : '('}${x}, ${y}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -208,25 +246,25 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
 /**
  * Reverse the specified integer number (put all digits in reverse order)
- *
+ *ß
  * @param {number} num
  * @return {number}
  *
  * @example:
  *   12345 => 54321
  *   1111  => 1111
- *   87354 => 45378
+ *   87354 => 45378ß
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  return Number(num.toString().split('').reverse().join(''));
 }
 
 
@@ -251,6 +289,21 @@ function reverseInteger(/* num */) {
  *   4916123456789012 => false
  */
 function isCreditCardNumber(/* ccn */) {
+  // let sum = 0;
+  // const cnnArr = ccn.toString().split('').map((item) => Number(item));
+  // for (let i = 0; i < cnnArr.length; i += 1) {
+  //   let value = cnnArr[i];
+  //   if (i % 2 !== 0) {
+  //     value *= 2;
+  //     if (value > 9) {
+  //       // eslint-disable-next-line no-return-assign, no-param-reassign
+  //       value = value.toString().split('').reduce((acc, item) => acc += Number(item), 0);
+  //     }
+  //   }
+  //   sum += value;
+  // }
+
+  // return (sum % 10) === 0;
   throw new Error('Not implemented');
 }
 
